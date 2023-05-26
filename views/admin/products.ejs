@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>The Mobile Hour Admin Dashboard</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/extra-libs/multicheck/multicheck.css">
+    <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="assets/libs/flot/css/float-chart.css" rel="stylesheet">
+    <link href="dist/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin5">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <a class="navbar-brand" href="/admin">
+                        <!-- Logo icon -->
+                        <b class="logo-icon">
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="assets/images/logo.png" alt="homepage" class="light-logo" />
+                        </b>
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <ul class="navbar-nav float-left mr-auto">
+                        <li class="nav-item d-none d-md-block"></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav" class="p-t-30">
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="useraccounts" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">User Accounts</span></a></li>
+                        <li class="sidebar-item selected"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="products" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">Products</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="changelog" aria-expanded="false"><i class="mdi mdi-information"></i><span class="hide-menu">Changelog</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="addadmin" aria-expanded="false"><i class="mdi mdi-account-card-details"></i><span class="hide-menu">Add Admin User</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="logout" aria-expanded="false"><i class="mdi mdi-logout-variant"></i><span class="hide-menu">Log out</span></a></li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title font-24">Products</h4>
+                        <div class="ml-auto text-right">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Product List</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="zero_config" class="table table-striped table-bordered">
+                                        <div class="d-flex justify-content-end mb-3">
+                                            <button type="button" class="btn btn-secondary mr-3 float-right" data-toggle="modal" data-target="#addProductModal">Add New Product</button>
+                                        </div>
+                                        <thead>
+                                          <tr>
+                                            <th>Product ID</th>
+                                            <th>Name</th>
+                                            <th>Model</th>
+                                            <th>Brand</th>
+                                            <th>Price</th>
+                                            <th>Current Stock</th>
+                                            <th>Actions</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% for(var i=0; i<items.length; i++) { %>
+                                          <tr>
+                                            <td><%= items[i].product_id %></td>
+                                            <td><%= items[i].product_name %></td>
+                                            <td><%= items[i].product_model %></td>
+                                            <td><%= items[i].manufacturer %></td>
+                                            <td>$<%= items[i].price %></td>
+                                            <td><%= items[i].stock_on_hand %></td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More Options</button>
+                                                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                      <a class="dropdown-item" data-toggle="modal" data-target="#editModal" onclick='getProdEditData(<%- JSON.stringify(items[i]) %>, <%- JSON.stringify(features[i]) %>)' href="#">Edit</a>
+                                                      <a class="dropdown-item" data-toggle="modal" data-target="#deleteModal" href="#" onclick='deleteProduct(<%- items[i].feature_id %>)'>Delete</a>
+                                                      <a class="dropdown-item" data-toggle="modal" data-target="#featureModal" href="#" onclick='getProdFeatData(<%- JSON.stringify(features[i]) %>)'>View Features</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                          </tr>
+                                        <% } %>
+                                        </tbody>
+                                      </table>
+                                    <!-- Edit Modal -->
+                                    <div class="modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="editModalLabel">Edit Product</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="editForm" onsubmit="sendProdEdit(event)">
+                                            <div class="row">
+                                              <div class="col">
+                                                    <label for="name">Name</label>
+                                                    <input type="text" class="form-control" name="name" pattern=".{4,30}" title="Please enter a valid product name (4-30 characters)" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="os">OS</label>
+                                                    <input type="text" class="form-control" name="os" pattern=".{4,30}" title="Please enter a valid OS (4-30 characters)" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="cpu">CPU</label>
+                                                    <input type="text" class="form-control" name="cpu" pattern=".{4,30}" title="Please enter a valid CPU (4-30 characters)" required>
+                                                </div>
+                                                </div>
+                                                <div class="row mt-3">  
+                                                    <div class="col">
+                                                        <label for="brand">Brand</label>
+                                                        <select class="form-control" name="brand" required>
+                                                            <option value="Samsung">Samsung</option>
+                                                            <option value="Apple">Apple</option>
+                                                            <option value="Huawei">Huawei</option>
+                                                            <option value="OnePlus">OnePlus</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col">
+                                                    <label for="weight">Weight</label>
+                                                    <input type="text" class="form-control" name="weight" pattern=".{3,10}" title="Please enter a valid weight (3-10 characters)" required>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="ram">RAM</label>
+                                                        <input type="text" class="form-control" name="ram" pattern=".{3,20}" title="Please enter valid RAM information (3-20 characters)" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col">
+                                                    <label for="model">Model</label>
+                                                    <input type="text" class="form-control" name="model" pattern=".{2,30}" title="Please enter a valid model (2-30 characters)" required>
+                                                    </div>
+                                                    <div class="col">
+                                                    <label for="dimensions">Dimensions</label>    
+                                                    <input type="text" class="form-control" name="dimensions" pattern=".{4,30}" title="Please enter valid dimensions (4-30 characters)" required>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="storage">Storage</label>    
+                                                        <input type="text" class="form-control" name="storage" pattern=".{4,15}" title="Please enter valid storage information (4-15 characters)" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col">
+                                                    <label for="price">Price</label>
+                                                    <input type="text" class="form-control" name="price" pattern="[0-9]+" title="Please enter a valid price (numbers only)" required>
+                                                    </div>
+                                                    <div class="col">
+                                                    <label for="screensize">Screen Size</label>
+                                                    <input type="text" class="form-control" name="screensize" pattern=".{2,10}" title="Please enter a valid screen size (2-10 characters)" required>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="battery">Battery</label>
+                                                        <input type="text" class="form-control" name="battery" pattern=".{4,20}" title="Please enter valid battery information (4-20 characters)" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-4">
+                                                    <label for="stock">Stock</label>
+                                                    <input type="text" class="form-control" name="stock" pattern="[0-9]+" title="Please enter a valid stock number (numbers only)" required>
+                                                </div>
+                                                    <div class="col-4">
+                                                        <label for="resolution">Resolution</label>
+                                                        <input type="text" class="form-control" name="resolution" pattern=".{4,20}" title="Please enter a valid resolution (4-20 characters)" required>
+                                                    </div>  
+                                                    <div class="col-4">
+                                                        <label for="camera">Front and Rear Camera</label>
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <input type="text" class="form-control" name="frontcamera" pattern=".{2,10}" title="Please enter valid front camera information (2-10 characters)" required>
+                                                                </div>
+                                                            <div class="col-6">
+                                                                <input type="text" class="form-control" name="rearcamera" pattern=".{2,10}" title="Please enter valid rear camera information (2-10 characters)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" name="close" class="btn btn-secondary" data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <button name="submit" type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <!-- Add Product Modal -->
+                             <div class="modal" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                    <div class="modal-body">
+                                        <div id="alert-pop" class="alert alert-warning alert-dismissible fade text-center" role="alert">
+                                            <strong>You must select a brand!</strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div> 
+                                        <form id="addProductForm" onsubmit="addNewProduct(event)">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="name">Name</label>
+                                                    <input type="text" class="form-control" name="name" placeholder="Enter product name" pattern=".{4,30}" title="Please enter a valid product name (4-30 characters)" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="os">OS</label>
+                                                    <input type="text" class="form-control" name="os" placeholder="Enter operating system" pattern=".{4,30}" title="Please enter a valid OS (4-30 characters)" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="cpu">CPU</label>
+                                                    <input type="text" class="form-control" name="cpu" placeholder="Enter product CPU" pattern=".{4,30}" title="Please enter a valid CPU (4-30 characters)" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <label for="brand">Brand</label>
+                                                    <select class="form-control" name="brand" required>
+                                                        <option value="0">Select a brand</option>
+                                                        <option value="Samsung">Samsung</option>
+                                                        <option value="Apple">Apple</option>
+                                                        <option value="Huawei">Huawei</option>
+                                                        <option value="OnePlus">OnePlus</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="weight">Weight</label>
+                                                    <input type="text" class="form-control" name="weight" placeholder="Enter product weight" pattern=".{3,10}" title="Please enter a valid weight (3-10 characters)" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="ram">RAM</label>
+                                                    <input type="text" class="form-control" name="ram" placeholder="Enter RAM size" pattern=".{3,20}" title="Please enter valid RAM information (3-20 characters)" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <label for="model">Model</label>
+                                                    <input type="text" class="form-control" name="model" placeholder="Enter product model" pattern=".{2,30}" title="Please enter a valid model (2-30 characters)" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="dimensions">Dimensions</label>
+                                                    <input type="text" class="form-control" name="dimensions" placeholder="Enter product dimensions" pattern=".{4,30}" title="Please enter valid dimensions (4-30 characters)" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="storage">Storage</label>
+                                                    <input type="text" class="form-control" name="storage" placeholder="Enter storage size" pattern=".{4,15}" title="Please enter valid storage information (4-15 characters)" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <label for="price">Price</label>
+                                                    <input type="text" class="form-control" name="price" placeholder="Enter product price" pattern="[0-9]+" title="Please enter a valid price (numbers only)" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="screensize">Screen Size</label>
+                                                    <input type="text" class="form-control" name="screensize" placeholder="Enter screen size" pattern=".{2,10}" title="Please enter a valid screen size (2-10 characters)" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="battery">Battery</label>
+                                                    <input type="text" class="form-control" name="battery" placeholder="Enter battery details" pattern=".{4,20}" title="Please enter valid battery information (4-20 characters)" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-4">
+                                                    <label for="stock">Stock</label>
+                                                    <input type="text" class="form-control" name="stock" placeholder="Enter product stock" pattern="[0-9]+" title="Please enter a valid stock number (numbers only)" required>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label for="resolution">Resolution</label>
+                                                    <input type="text" class="form-control" name="resolution" placeholder="Enter resolution" pattern=".{4,20}" title="Please enter a valid resolution (4-20 characters)" required>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label for="camera">Front and Rear Camera</label>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <input type="text" class="form-control" name="frontcamera" placeholder="Front camera" pattern=".{2,10}" title="Please enter valid front camera information (2-10 characters)" required>
+                                                        </div>
+                                                            <div class="col-6">
+                                                                <input type="text" class="form-control" name="rearcamera" placeholder="Rear camera" pattern=".{2,10}" title="Please enter valid rear camera information (2-10 characters)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" name="close" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button name="submit" type="submit" class="btn btn-primary">Add product</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                           <!-- Delete Modal -->
+                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel">Delete Product</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this product?
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" id="deleteSubmit" class="btn btn-primary">Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="featureModal" tabindex="-1" aria-labelledby="featureModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="featureModalLabel">Product Features</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div id="prodFeatures" class="modal-body">
+                                    <h5 id="featos"></h5>
+                                    <h5 id="featweight"></h5>
+                                    <h5 id="featdimensions"></h5>
+                                    <h5 id="featscreensize"></h5>
+                                    <h5 id="featresolution"></h5>
+                                    <h5 id="featcpu"></h5>
+                                    <h5 id="featram"></h5>
+                                    <h5 id="featstorage"></h5>
+                                    <h5 id="featbattery"></h5>
+                                    <h5 id="featrearcam"></h5>
+                                    <h5 id="featfrontcam"></h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center">
+                <strong>©The Mobile Hour 2023</strong>
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <!-- Script -->
+    <script src="dist/js/getProdFeatData.js"></script>
+    <script src="dist/js/addNewProduct.js"></script>
+    <script src="dist/js/deleteProduct.js"></script>
+    <script src="dist/js/sendProdEdit.js"></script>
+    <script src="dist/js/getProdEditData.js"></script>
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="dist/js/custom.min.js"></script>
+    <!-- this page js -->
+    <script src="assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+    <script src="assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+    <script src="assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script>
+        /****************************************
+         *       Basic Table                   *
+         ****************************************/
+        $('#zero_config').DataTable();
+    </script>
+
+</body>
+
+</html>

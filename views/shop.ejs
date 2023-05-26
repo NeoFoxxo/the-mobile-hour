@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="img/fav.png">
+	<!-- Author Meta -->
+	<meta name="author" content="CodePixar">
+	<!-- Meta Description -->
+	<meta name="description" content="">
+	<!-- Meta Keyword -->
+	<meta name="keywords" content="">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<!-- Site Title -->
+	<title>The Mobile Hour</title>
+
+	<!--
+            CSS
+            ============================================= -->
+	<link rel="stylesheet" href="css/linearicons.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/themify-icons.css">
+	<link rel="stylesheet" href="css/nice-select.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+
+<body id="category">
+	<script src="/js/radio.js"defer></script>
+	<script src="/js/filter.js" defer></script>
+	<script src="/js/brandfilter.js" defer></script>
+	<!-- Start Header Area -->
+	<header class="header_area sticky-header">
+		<div class="main_menu">
+			<nav class="navbar navbar-expand-lg navbar-light main_box">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<a class="navbar-brand logo_h" href="/"><img src="img/logo.png" alt=""></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<ul class="nav navbar-nav menu_nav ml-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="/">Home</a>
+							</li>
+
+							<li class="nav-item active">
+								<a href="/shop" class="nav-link">Shop</a>
+							</li>
+
+							<li class="nav-item">
+								<a href="login.html" class="nav-link">Login</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
+	<!-- End Header Area -->
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Shop</h1>
+					<nav class="d-flex align-items-center">
+						<a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="/shop">Shop</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-3 col-lg-4 col-md-5">
+				<div class="sidebar-categories">
+					<div class="head">Browse Brands</div>
+				</div>
+				<div class="sidebar-filter mt-50">
+					<div class="common-filter">
+						<div class="head">Brands</div>
+						<form>
+							<ul>
+								<li class="filter-list"><input class="pixel-radio" id="samsung" type="radio" value="samsung" name="brand" onclick="radio(this.value)"><label for="samsung">Samsung<span> (<%= brands[3].count %>)</span></label></li>
+								<li class="filter-list"><input class="pixel-radio" id="apple" type="radio" value="apple" name="brand" onclick="radio(this.value)"><label for="apple">Apple<span> (<%= brands[0].count %>)</span></label></li>
+								<li class="filter-list"><input class="pixel-radio" id="huawei" type="radio" value="huawei" name="brand" onclick="radio(this.value)"><label for="huawei">Huawei<span> (<%= brands[1].count %>)</span></label></li>
+								<li class="filter-list"><input class="pixel-radio" id="oneplus" type="radio" value="oneplus" name="brand" onclick="radio(this.value)"><label for="oneplus">OnePlus<span> (<%= brands[2].count %>)</span></label></li>
+							</ul>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-9 col-lg-8 col-md-7">
+				<!-- Start Filter Bar -->
+				<div class="filter-bar d-flex flex-wrap align-items-center">
+					<div class="sorting">
+						<select onchange="filter(this.value)">
+							<option id="0" value="0">Default sorting</option>
+							<option id="lowhigh" value="lowhigh">Price - Low to High</option>
+							<option id="highlow" value="highlow">Price - High to Low</option>
+						</select>
+					</div>
+				</div>
+				<!-- End Filter Bar -->
+				<!-- Start Products -->
+				<section class="lattest-product-area pb-40 category-list">
+					<div class="row">
+						<% for(var i=0; i<items.length; i++) { %>
+							<!-- single product -->
+							<div class="col-lg-3 col-md-6 text-center">
+								<div class="single-product">
+									<a href="product/<%= items[i].product_id %>">
+										<!-- if the product image is null use the default image -->
+										<% if (items[i].product_image) { %>
+											<img class="img-fluid align-items-center" src="data:image/jpg;base64,<%= items[i].product_image.toString('base64') %>" alt="">
+										<% } else { %>
+											<img class="img-fluid align-items-center" src="/img/defaultprodimg.png" alt="">
+										<% } %>
+									</a>
+									<div class="product-details">
+										<h6><%= items[i].product_name %></h6>
+										<div class="price">
+											<h6>$<%= items[i].price %></h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						<% } %>
+					</div>
+				</section>
+				<!-- End Products -->
+			</div>
+		</div>
+	</div>
+
+	<!-- start footer Area -->
+	<footer class="footer-area">
+		<div class="container">
+			<div class="row justify-content-center align-items-center">
+				<div class="col-lg-3  col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<h6><a href="/">The Mobile Hour</a></h6>
+						<p>
+							The latest and greatest mobile phones, proudly based in Australia.
+						</p>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="single-footer-widget">
+						<h6><a href="/shop">Shop</a></h6>
+						<p>View our products</p>
+						</div>
+					</div>
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<h6><a href="/login.html">Login</a></h6>
+						<p>Login to The Mobile Hour</p>
+						</div>
+					</div>
+			<div class="col-lg-4 footer-bottom d-flex justify-content-center align-items-center flex-wrap">
+				<p class="footer-text m-0">
+				&copy; The Mobile Hour <script>document.write(new Date().getFullYear());</script>
+				</p>
+			</div>
+	</footer>
+	<!-- End footer Area -->
+	<script src="js/vendor/jquery-2.2.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+	 crossorigin="anonymous"></script>
+	<script src="js/vendor/bootstrap.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/jquery.sticky.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>

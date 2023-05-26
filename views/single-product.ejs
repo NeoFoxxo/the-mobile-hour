@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="/img/fav.png">
+	<!-- Author Meta -->
+	<meta name="author" content="CodePixar">
+	<!-- Meta Description -->
+	<meta name="description" content="">
+	<!-- Meta Keyword -->
+	<meta name="keywords" content="">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<!-- Site Title -->
+	<title>The Mobile Hour</title>
+	<!--
+			CSS
+			============================================= -->
+	<link rel="stylesheet" href="/css/linearicons.css">
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/themify-icons.css">
+	<link rel="stylesheet" href="/css/bootstrap.css">
+	<link rel="stylesheet" href="/css/nice-select.css">
+	<link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+	<!-- Start Header Area -->
+	<header class="header_area sticky-header">
+		<div class="main_menu">
+			<nav class="navbar navbar-expand-lg navbar-light main_box">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<a class="navbar-brand logo_h" href="/"><img src="/img/logo.png" alt=""></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<ul class="nav navbar-nav menu_nav ml-auto">
+							<li class="nav-item active">
+								<a class="nav-link" href="/">Home</a>
+							</li>
+
+							<li class="nav-item">
+								<a href="/shop" class="nav-link">Shop</a>
+							</li>
+
+							<li class="nav-item">
+								<a href="/login.html" class="nav-link">Login</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
+	<!-- End Header Area -->
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Product Details</h1>
+					<nav class="d-flex align-items-center">
+						<a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="/shop">Shop<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Product Details</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Single Product Area =================-->
+	<div class="product_image_area">
+		<div class="container">
+			<div class="row s_product_inner">
+				<div class="col-lg-6">
+					<div class="d-flex justify-content-center align-items-center">
+						<div class="single-prd-item">
+							<!-- if the product image is null use the default image -->
+							<% if (product[0].product_image) { %>
+								<img class="img-fluid align-items-center" src="data:image/jpg;base64,<%= product[0].product_image.toString('base64') %>" alt="">
+							  <% } else { %>
+								<img class="img-fluid align-items-center" src="/img/defaultprodimg.png" alt="">
+							<% } %>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-5 offset-lg-1">
+					<div class="s_product_text">
+						<h3 id="prodName"><%= product[0].product_name %></h3>
+						<h2 id="price">$<%= product[0].price %></h2>
+						<ul class="list">
+							<li><a class="active" href="#"><span>Brand</span> : <%= product[0].manufacturer %></a></li>
+							<li><a href="#"><span>Availibility</span> : In Stock</a></li>
+						</ul>
+						<p></p>
+						<div class="product_count">
+							<label for="qty">Quantity:</label>
+							<input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty" readonly>
+							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+							 class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;"
+							 class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+						</div>
+						<div class="card_area d-flex align-items-center">
+							<a class="primary-btn" id="order-btn">Order</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================End Single Product Area =================-->
+
+	<!--================Product Description Area =================-->
+	<section class="product_description_area">
+		<div class="container">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item ">
+					<a class="nav-link active show" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+					 aria-selected="false">Specifications</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+						Sed aliquid repellat inventore, quasi dicta debitis vel harum dolores voluptate cupiditate.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+						Sed aliquid repellat inventore, quasi dicta debitis vel harum dolores voluptate cupiditate.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+						Sed aliquid repellat inventore, quasi dicta debitis vel harum dolores voluptate cupiditate.</p>
+					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, dicta unde! 
+						Consequatur exercitationem, voluptates eligendi at magni pariatur velit explicabo dicta iure, praesentium accusamus est nemo quia sapiente, mollitia recusandae?</p>
+				</div>
+				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+					<div class="table-responsive">
+						<table class="table">
+							<tbody id="feature-table">
+								<tr>
+									<td>
+										<h5>OS:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].os %></h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Weight:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].weight %></h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Dimensions:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].dimensions %></h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Screen Size:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].screensize %></h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Resolution:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].resolution %></h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>CPU:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].cpu %></h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>RAM:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].ram %></h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Storage:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].storage %></h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Battery:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].battery %></h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Rear Camera:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].rear_camera %></h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Front Camera:</h5>
+									</td>
+									<td>
+										<h5><%= feature[0].front_camera %></h5>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Product Description Area =================-->
+
+	<!-- start footer Area -->
+	<footer class="footer-area">
+		<div class="container">
+			<div class="row justify-content-center align-items-center">
+				<div class="col-lg-3  col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<h6><a href="/">The Mobile Hour</a></h6>
+						<p>
+							The latest and greatest mobile phones, proudly based in Australia.
+						</p>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="single-footer-widget">
+						<h6><a href="/shop">Shop</a></h6>
+						<p>View our products</p>
+						</div>
+					</div>
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<h6><a href="/login.html">Login</a></h6>
+						<p>Login to The Mobile Hour</p>
+						</div>
+					</div>
+			<div class="col-lg-4 footer-bottom d-flex justify-content-center align-items-center flex-wrap">
+				<p class="footer-text m-0">
+				&copy; The Mobile Hour <script>document.write(new Date().getFullYear());</script>
+				</p>
+			</div>
+	</footer>
+	<!-- End footer Area -->
+
+	<script src="/js/vendor/jquery-2.2.4.min.js"></script>
+	<script src="/js/orderproduct.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+	 crossorigin="anonymous"></script>
+	<script src="/js/vendor/bootstrap.min.js"></script>
+	<script src="/js/jquery.nice-select.min.js"></script>
+	<script src="/js/jquery.sticky.js"></script>
+	<script src="/js/jquery.magnific-popup.min.js"></script>
+
+	<script src="/js/main.js"></script>
+</body>
+
+</html>
