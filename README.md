@@ -2,6 +2,7 @@
 
 The Mobile Hour is an ecommerce website built with EJS, Express.js, Bootstrap, and MySQL. It features a fully functional admin dashboard.
 
+<b>Timespent:</b> 52 hours 4 mins
 ## Features
 * 🔒 Full customer and admin authentication with encryption 
 * 📱  Fully responsive on mobile
