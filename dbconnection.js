@@ -13,10 +13,15 @@ const databaseDetails = {
 const db = mysql.createConnection(databaseDetails);
 
 // console log when the database has successfully connected or show the error
-db.connect((err) => {
-    if (err) throw err;
-    console.log("Connected to database");
-});
+function connectToDatabase() {
+
+  db.connect((err) => {
+      if (err) {
+        throw err;
+      }
+      console.log("Connected to database");
+  });
+}
 
 // export so that we can connect to the database from any file
-module.exports = db;
+module.exports = { db, connectToDatabase };

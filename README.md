@@ -20,7 +20,7 @@ To run this on your local machine, you will need to have Node.js installed and a
 
 1. Clone the repository to your local machine
 2. Import the Database.sql file to phpMyAdmin or your MySQL server
-5. Start the app using `node app.js` in your console
+5. Start the app using `npm run start` in your console
 6. Check the credentials folder for the account details
 7. Access the website on port 3001 and enjoy!
 

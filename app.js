@@ -4,9 +4,11 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const adminRouter = require('./routes/admin');
-const db = require('./dbconnection');
-const https = require('https');
-const fs = require('fs');
+const { db, connectToDatabase } = require('./dbconnection');
+// const https = require('https');
+// const fs = require('fs');
+
+connectToDatabase();
 
 // allow the public folder to be read
 app.use(express.static("public"))
@@ -62,6 +64,9 @@ app.get('/shop', (req, res) => {
     if (selectedBrand) {
         sql += ` WHERE manufacturer = ?`;
     }
+    else {
+      selectedBrand = null;
+    }
 
     // if the customer chooses a filter, filter the results based on low to high or reverse
     if (filter == "lowhigh") {
@@ -70,7 +75,6 @@ app.get('/shop', (req, res) => {
     else if (filter == "highlow") {
         sql += ` ORDER BY price DESC`;
     }
-
 
     db.query(sql, selectedBrand, (err, result1) => {
 
@@ -118,7 +122,6 @@ app.get('/product/:product_id', (req, res) => {
 
 // the endpoint for registering customers
 app.post("/register", (req, res) => {
-
     // get the form inputs from the frontend
     let address = req.body.address;
     let city = req.body.city;
@@ -335,6 +338,14 @@ app.get('/:page', (req, res) => {
 //     console.log('server listening on port 443 https://localhost');
 // });
 
-// start the server
-app.listen(3001);
-console.log('server listening on port 3001 http://localhost:3001');
+/* 
+  if the server is being tested choose a random port to prevent port clashing 
+  https://stackoverflow.com/questions/54422849/jest-testing-multiple-test-file-port-3000-already-in-use
+*/
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(3001);
+  console.log('server listening on port 3001 http://localhost:3001');
+} 
+
+
+module.exports = app;
