@@ -1,6 +1,6 @@
 const supertest = require('supertest');
-const app = require("../app");
-const { db } = require('../dbconnection');
+const app = require("../../app");
+const { db } = require('../../dbconnection');
 
 describe('Home page', () => {
   let response;

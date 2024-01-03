@@ -20,7 +20,7 @@ app.use('/admin', express.static("admin_public"));
 app.use(express.json());
 
 // used to read requests
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 
 // setup express-session in order to see if a user has logged in before
 app.use(session({
@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
 
 // serve the shop page
 app.get('/shop', (req, res) => {
-    
+
     // get the selected brand from the url
     let selectedBrand = req.query.brand;
 
@@ -59,13 +59,13 @@ app.get('/shop', (req, res) => {
 
     // get all the products and display them
     let sql = 'SELECT * FROM product';
-   
+
     // if the customer chooses a brand with the radio buttons or uses the category on the front page filter the results instead
     if (selectedBrand) {
         sql += ` WHERE manufacturer = ?`;
     }
     else {
-      selectedBrand = null;
+        selectedBrand = null;
     }
 
     // if the customer chooses a filter, filter the results based on low to high or reverse
@@ -84,7 +84,7 @@ app.get('/shop', (req, res) => {
         const sql2 = 'SELECT manufacturer, COUNT(*) as count FROM product GROUP BY manufacturer ORDER BY manufacturer;'
 
         db.query(sql2, (err, result2) => {
-            
+
             if (err) throw err;
 
             // render the page and bind all of the info to the page
@@ -95,13 +95,13 @@ app.get('/shop', (req, res) => {
 
 // the endpoint that generates individual product pages
 app.get('/product/:product_id', (req, res) => {
-    
+
     // pull the product id from the url
     const id = req.params.product_id;
 
     // this first query gets the basic info of the product
     const sql1 = `SELECT * FROM product WHERE product.product_id = ? `;
-    
+
     db.query(sql1, id, (err, result1) => {
 
         if (err) throw err;
@@ -110,7 +110,7 @@ app.get('/product/:product_id', (req, res) => {
         const sql2 = `SELECT * FROM feature WHERE feature.feature_id = ? `;
 
         db.query(sql2, result1[0].feature_id, (err, result2) => {
-            
+
             if (err) throw err;
 
             // render the page and bind all of the info to the page
@@ -144,14 +144,14 @@ app.post("/register", (req, res) => {
 
         // execute the sql with a parameterized query
         let sql = `INSERT INTO customer (cust_address, city, cust_email, firstname, lastname, cust_password, cust_phone, postcode, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        
+
         db.query(sql, [address, city, email, firstname, lastname, hash, phone, postcode, state], (err, result) => {
 
             if (err) {
                 console.log(`an error occured ${err}`);
                 // tell the client if the registration was successful or not
                 res.json({ success: false });
-            } 
+            }
             else {
                 console.log(`account ${firstname} successfully created `);
                 // tell the client if the registration was successful or not
@@ -163,16 +163,16 @@ app.post("/register", (req, res) => {
 
 // the endpoint for logging in customers
 app.post("/userlogin", (req, res) => {
-    
-// get the form inputs from the frontend
-let email = req.body.email;
-let password = req.body.password;
-  
-  // search for the user by their email using a parameterized query
-  let sql = `SELECT * FROM customer WHERE cust_email = ?`;
+
+    // get the form inputs from the frontend
+    let email = req.body.email;
+    let password = req.body.password;
+
+    // search for the user by their email using a parameterized query
+    let sql = `SELECT * FROM customer WHERE cust_email = ?`;
 
     db.query(sql, [email], (err, result) => {
-        
+
         if (err) throw err;
 
         // if there is a row the user is in the database
@@ -180,27 +180,27 @@ let password = req.body.password;
 
             // get that user
             let user = result[0];
-            
-                // compare the login password with the hashed customer password
-                bcrypt.compare(password, user.cust_password, (err, match) => {
 
-                    if (err) throw err;
+            // compare the login password with the hashed customer password
+            bcrypt.compare(password, user.cust_password, (err, match) => {
 
-                    if (match) {
-                        console.log(`${user.firstname} successfully logged in`);
+                if (err) throw err;
 
-                        // when the user logs in save their id to the session so we remember that they have logged in
-                        req.session.customer = user.customer_id;
+                if (match) {
+                    console.log(`${user.firstname} successfully logged in`);
 
-                        // tell the client if the login was successful or not
-                        res.json({ success: true });
-                    } 
-                    else {
-                        console.log("invalid credentials, try again");
-                        res.json({ success: false });
-                    }
+                    // when the user logs in save their id to the session so we remember that they have logged in
+                    req.session.customer = user.customer_id;
+
+                    // tell the client if the login was successful or not
+                    res.json({ success: true });
+                }
+                else {
+                    console.log("invalid credentials, try again");
+                    res.json({ success: false });
+                }
             });
-        } 
+        }
         else {
             console.log("invalid credentials, try again");
             res.json({ success: false });
@@ -214,27 +214,27 @@ let sharedData;
 // use middleware for the order endpoint so that i can use the data in the confirmation get endpoint
 app.use((req, res, next) => {
 
-// this route checks if the user is logged in before creating an order
-  if (req.method === 'POST' && req.path === '/order') {
+    // this route checks if the user is logged in before creating an order
+    if (req.method === 'POST' && req.path === '/order') {
 
-    // check if the user is logged in
-    if (req.session.customer) {
+        // check if the user is logged in
+        if (req.session.customer) {
 
-        res.json({ success: true });
-    } 
+            res.json({ success: true });
+        }
 
-    // if the user is not logged in
-    else {
-        res.json({ success: false });
+        // if the user is not logged in
+        else {
+            res.json({ success: false });
+        }
+
+        // assign the request data to a variable we can use in the /confirmation endpoint
+        sharedData = req.body;
     }
-
-    // assign the request data to a variable we can use in the /confirmation endpoint
-    sharedData = req.body;
-  }
-  next();
+    next();
 });
 
-app.get("/confirmation", (req, res) =>{
+app.get("/confirmation", (req, res) => {
 
     // get the logged in customer's ID
     let customer_id_raw = req.session.customer;
@@ -268,7 +268,7 @@ app.get("/confirmation", (req, res) =>{
 
         if (err) {
             console.log(`an error occured ${err}`);
-        } 
+        }
         else {
 
             // get the order_number PK
@@ -284,8 +284,7 @@ app.get("/confirmation", (req, res) =>{
                 if (err) {
                     console.log(`an error occured ${err}`);
                 }
-                else
-                {
+                else {
                     // run the third and final query to get the customer's address
                     let sql3 = `SELECT * FROM customer WHERE customer_id = ?`;
 
@@ -311,7 +310,7 @@ app.get("/confirmation", (req, res) =>{
                         console.log(info)
 
                         res.render('confirmation', { items: info, address: result });
-                    }); 
+                    });
                 }
             });
         }
@@ -343,9 +342,9 @@ app.get('/:page', (req, res) => {
   https://stackoverflow.com/questions/54422849/jest-testing-multiple-test-file-port-3000-already-in-use
 */
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(3001);
-  console.log('server listening on port 3001 http://localhost:3001');
-} 
+    app.listen(3001);
+    console.log('server listening on port 3001 http://localhost:3001');
+}
 
 
 module.exports = app;

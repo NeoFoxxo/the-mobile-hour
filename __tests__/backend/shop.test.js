@@ -1,6 +1,6 @@
 const supertest = require('supertest');
-const app = require("../app");
-const { db } = require('../dbconnection');
+const app = require("../../app");
+const { db } = require('../../dbconnection');
 
 describe('Shop page', () => {
   let DBSpy;
@@ -8,7 +8,7 @@ describe('Shop page', () => {
   beforeEach(() => {
     DBSpy = jest.spyOn(db, 'query');
   });
-  
+
   afterEach(() => {
     DBSpy.mockRestore();
   });
@@ -20,27 +20,32 @@ describe('Shop page', () => {
   });
 
   test('Filter results from low to high if filter query is "lowhigh"', async () => {
-    await supertest(app).get('/shop').query({ filter: "lowhigh" });
+    const response = await supertest(app).get('/shop').query({ filter: "lowhigh" });
+    expect(response.statusCode).toBe(200);
     expect(DBSpy).toHaveBeenNthCalledWith(1, "SELECT * FROM product ORDER BY price", null, expect.any(Function));
   });
 
   test('Filter results from high to low if filter query is "highlow"', async () => {
-    await supertest(app).get('/shop').query({ filter: "highlow" });
+    const response = await supertest(app).get('/shop').query({ filter: "highlow" });
+    expect(response.statusCode).toBe(200);
     expect(DBSpy).toHaveBeenNthCalledWith(1, "SELECT * FROM product ORDER BY price DESC", null, expect.any(Function));
   });
 
   test('Only show products from the manufacturer provided in the selectedBrand query parameter', async () => {
-    await supertest(app).get('/shop').query({ brand: "samsung" });
+    const response = await supertest(app).get('/shop').query({ brand: "samsung" });
+    expect(response.statusCode).toBe(200);
     expect(DBSpy).toHaveBeenNthCalledWith(1, "SELECT * FROM product WHERE manufacturer = ?", "samsung", expect.any(Function));
   });
 
   test('Filter results from low to high for a specific brand', async () => {
-    await supertest(app).get('/shop').query({ filter: "lowhigh", brand: "apple" });
+    const response = await supertest(app).get('/shop').query({ filter: "lowhigh", brand: "apple" });
+    expect(response.statusCode).toBe(200);
     expect(DBSpy).toHaveBeenNthCalledWith(1, "SELECT * FROM product WHERE manufacturer = ? ORDER BY price", "apple", expect.any(Function));
   });
 
   test('Filter results from high to low for a specific brand', async () => {
-    await supertest(app).get('/shop').query({ filter: "highlow", brand: "oneplus" });
+    const response = await supertest(app).get('/shop').query({ filter: "highlow", brand: "oneplus" });
+    expect(response.statusCode).toBe(200);
     expect(DBSpy).toHaveBeenNthCalledWith(1, "SELECT * FROM product WHERE manufacturer = ? ORDER BY price DESC", "oneplus", expect.any(Function));
   });
 })

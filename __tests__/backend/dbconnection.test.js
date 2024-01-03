@@ -7,7 +7,7 @@ mysql.createConnection.mockImplementation(() => ({
 }));
 
 // import after the mysql mock is made to force dbconnection to use it instead of the real mysql
-const { db, connectToDatabase } = require('../dbconnection');
+const { db, connectToDatabase } = require('../../dbconnection');
 
 describe('Connect to Database', () => {
   test('Database details are correct', () => {
@@ -19,7 +19,7 @@ describe('Connect to Database', () => {
       multipleStatements: true
     })
   });
-  
+
   test('Database connection is called', () => {
     connectToDatabase();
     expect(db.connect).toHaveBeenCalled();
