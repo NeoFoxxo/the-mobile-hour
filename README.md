@@ -23,6 +23,11 @@ To run this on your local machine, you will need to have Node.js installed and a
 5. Start the app using `npm run start` in your console
 6. Check the credentials folder for the account details
 7. Access the website on port 3001 and enjoy!
+## Running Tests
+
+The Mobile Hour includes a test suite that ensures the functionality of the app. This test suite includes unit and integration tests written with Jest and Supertest.
+<br>To run the tests use the following command:
+`npm run test`
 
 ## Website Images
 <table>
